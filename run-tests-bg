@@ -6,13 +6,12 @@ if [[ ! -e /tmp/$(basename $1)/build.log ]]; then
 
 fi
 
-if ! make -C $1/$2 &> /tmp/$(basename $1)/build.fail; then
-    make -C $1/$2 > /tmp/$(basename $1)/build.log     
-    notify-send "Success" "Build Succeeded"
-else
-    make -C $1/$2 &> /tmp/$(basename $1)/build.fail
-    notify-send "Warning" "Build Has Failed"
+make -C $1/$2 > /tmp/$(basename $1)/build.log 2> /tmp/$(basename $1)/build.fail 
 
+if [[ $? -ne 0 ]]; then
+    notify-send "Warning" "Build Has Failed"
+    exit 1
 fi
 
+  
 exit -1
