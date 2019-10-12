@@ -8,15 +8,17 @@ echo "Argument[1]: $1" # This is empty if no arguments were passed
 echo "Argument[2]: $2" # This is empty if only one argument was passed
 echo "$(pwd)"
 
-if [ ! -d "~/tmp/$1" ]; then
-    mkdir ~/tmp/$1
+if [ ! -d "/tmp/$(basename $1)" ]; then
+    mkdir /tmp/$(basename $1) 
 fi
 
-PROJ_TMP_DIR="~/tmp/$1"
+PROJ_TMP_DIR="/tmp/$(basename $1)"
 
 git clone --local $1 $PROJ_TMP_DIR/$(git describe --always)
 
-run-tests-bg $PROJ_TMP_DIR &
+#TEST="2a6e909"
+
+run-tests-bg $PROJ_TMP_DIR $(git describe --always) &
 
 
 sleep 10s && echo "It is annoying to wait for long commands to finish"

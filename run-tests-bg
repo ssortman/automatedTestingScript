@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ ! -e /tmp/$(basename $1)/build.log ]]; then
+   touch /tmp/$(basename $1)/build.log
+   touch /tmp/$(basename $1)/build.fail
+
+fi
+
+if ! make -C $1/$2 &> /tmp/$(basename $1)/build.fail; then
+    make -C $1/$2 > /tmp/$(basename $1)/build.log     
+    notify-send "Success" "Build Succeeded"
+else
+    make -C $1/$2 &> /tmp/$(basename $1)/build.fail
+    notify-send "Warning" "Build Has Failed"
+
+fi
+
+exit -1
