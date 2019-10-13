@@ -14,7 +14,7 @@ fi
 
 PROJ_TMP_DIR="/tmp/$(basename $1)"
 
-git clone --local $1 $PROJ_TMP_DIR/$(git describe --always)
+git clone $1 $PROJ_TMP_DIR/$(git describe --always)
 
 #TEST="2a6e909"
 
