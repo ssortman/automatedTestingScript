@@ -14,16 +14,30 @@ if [[ $? -ne 0 ]]; then
 fi
 
 listTestFiles=$(find $1/$2 -name "*test*")
-
+totalTestsNum=0
 for file in $listTestFiles; do
-    if [[ -x $file ]]; then
+        if [[ -x $file ]]; then
+	totalTestsNum=$(($totalTestsNum + 1))
+
 	regOutput="/tmp/$(basename $1)/$(basename $file)"Reg""
 	errOutput="/tmp/$(basename $1)/$(basename $file)"Err""
-	touch $regOutput
-	touch $errOutput
+
         make -B $file > $regOutput 2> $errOutput
     fi
 done
+
+listErrFiles=$(find /tmp/$(basename $1) -name "*Err*")
+totalFailNum=0
+for file in $listErrFiles; do
+   if [[ -s $file ]]; then
+       totalFailNum=$(($totalFailNum + 1))
+   else
+       rm $file 
+   fi 
+done
+
+notify-send "Finished Testing" "$totalFailNum/$totalTestsNum Failed"
+
 
  
   
