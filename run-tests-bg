@@ -13,5 +13,18 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
+listTestFiles=$(find $1/$2 -name "*test*")
+
+for file in $listTestFiles; do
+    if [[ -x $file ]]; then
+	regOutput="/tmp/$(basename $1)/$(basename $file)"Reg""
+	errOutput="/tmp/$(basename $1)/$(basename $file)"Err""
+	touch $regOutput
+	touch $errOutput
+        make -B $file > $regOutput 2> $errOutput
+    fi
+done
+
+ 
   
 exit -1
