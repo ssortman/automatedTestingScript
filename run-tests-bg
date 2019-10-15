@@ -13,6 +13,8 @@ if [[ $? -ne 0 ]]; then
    # exit 1
 fi
 
+#this line changes
+
 listTestFiles=$(find $1/$2 -name "*test*")
 totalTestsNum=0
 for file in $listTestFiles; do
@@ -25,7 +27,10 @@ for file in $listTestFiles; do
         make -B $file > $regOutput 2> $errOutput
     fi
 done
-
+#This line also changes
+#And this line
+#And this line
+#And this line
 #Counting num of errors in tests and deleting err files that are empty
 
 listErrFiles=$(find /tmp/$(basename $1) -name "*Err*")
