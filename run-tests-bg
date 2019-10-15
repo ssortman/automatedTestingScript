@@ -26,6 +26,8 @@ for file in $listTestFiles; do
     fi
 done
 
+#Counting num of errors in tests and deleting err files that are empty
+
 listErrFiles=$(find /tmp/$(basename $1) -name "*Err*")
 totalFailNum=0
 for file in $listErrFiles; do
