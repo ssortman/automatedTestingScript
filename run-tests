@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+#
 echo "Hello, I am your test script running."
 
 echo "Number of arguments I reveived: $#"
@@ -21,9 +21,9 @@ git clone $1 $PROJ_TMP_DIR/$(git describe --always)
 run-tests-bg $PROJ_TMP_DIR $(git describe --always) &
 
 
-sleep 10s && echo "It is annoying to wait for long commands to finish"
-sleep 10s & echo "We can put them in the background so we don't have to wait"
-notify-send "Test Message" "Blocking part of the script finished"
-echo "Notice that the second sleep is still running, we can tell by: $(pidof sleep)"
+#sleep 10s && echo "It is annoying to wait for long commands to finish"
+#sleep 10s & echo "We can put them in the background so we don't have to wait"
+#notify-send "Test Message" "Blocking part of the script finished"
+#echo "Notice that the second sleep is still running, we can tell by: $(pidof sleep)"
 
-
+exit -1
