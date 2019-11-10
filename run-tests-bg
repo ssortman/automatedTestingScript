@@ -3,35 +3,26 @@
 if [[ ! -e /tmp/$(basename $1)/build.log ]]; then
    touch /tmp/$(basename $1)/build.log
    touch /tmp/$(basename $1)/build.fail
-
 fi
 
 make -C $1/$2 > /tmp/$(basename $1)/build.log 2> /tmp/$(basename $1)/build.fail 
 
 if [[ $? -ne 0 ]]; then
     notify-send "Warning" "Build Has Failed"
-   # exit 1
+    exit 1
 fi
-
-#this line changes
 
 listTestFiles=$(find $1/$2 -name "*test*")
 totalTestsNum=0
 for file in $listTestFiles; do
         if [[ -x $file ]]; then
-	totalTestsNum=$(($totalTestsNum + 1))
-
-	regOutput="/tmp/$(basename $1)/$(basename $file)"Reg""
-	errOutput="/tmp/$(basename $1)/$(basename $file)"Err""
-
-        make -B $file > $regOutput 2> $errOutput
-    fi
+			totalTestsNum=$(($totalTestsNum + 1))
+			regOutput="/tmp/$(basename $1)/$(basename $file)"Reg""
+			errOutput="/tmp/$(basename $1)/$(basename $file)"Err""
+        	make -B $file > $regOutput 2> $errOutput
+   		fi
 done
-#This line also changes
-#And this line
-#And this line
-#And this line
-#Counting num of errors in tests and deleting err files that are empty
+
 
 listErrFiles=$(find /tmp/$(basename $1) -name "*Err*")
 totalFailNum=0
@@ -44,8 +35,5 @@ for file in $listErrFiles; do
 done
 
 notify-send "Finished Testing" "$totalFailNum/$totalTestsNum Failed"
-
-
  
-  
 exit -1

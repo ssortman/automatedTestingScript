@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
-#
-echo "Hello, I am your test script running."
-#this line changes
-#This line changes
-#This line changes
-#This line changes
 
+echo "Hello, I am your test script running."
 echo "Number of arguments I reveived: $#"
 echo "Argument[0] (the program being run): $0"
 echo "Argument[1]: $1" # This is empty if no arguments were passed
@@ -19,8 +14,6 @@ fi
 PROJ_TMP_DIR="/tmp/$(basename $1)"
 
 git clone $1 $PROJ_TMP_DIR/$(git describe --always)
-
-#TEST="2a6e909"
 
 run-tests-bg $PROJ_TMP_DIR $(git describe --always) &
 
